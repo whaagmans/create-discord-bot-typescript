@@ -1,0 +1,36 @@
+{
+  "name": "create-discord-bot",
+  "version": "1.0.0",
+  "description": "npx script to instantly create a good folder structure based on https://github.com/whaagmans/discord-bot-typescript-template to start building your own discord bot",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whaagmans/create-discord-bot.git"
+  },
+  "type": "module",
+  "bin": {
+    "create-discord-bot": "./index.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "node",
+    "typescript",
+    "javascript",
+    "discordjs"
+  ],
+  "author": "whaagmans",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/whaagmans/create-discord-bot/issues"
+  },
+  "homepage": "https://github.com/whaagmans/create-discord-bot#readme",
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "inquirer": "^9.2.11",
+    "ncp": "^2.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
