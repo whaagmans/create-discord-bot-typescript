@@ -5,18 +5,32 @@ import path, { dirname } from "path";
 import inquirer from "inquirer";
 import ncp from "ncp";
 import { spawn } from "child_process";
+import fs from "fs";
 
-const copyTemplate = async (destination, language) => {
+const copyTemplate = async (answers) => {
+  const { projectName: destination, language, packageManager } = answers;
+
   const __dirname = dirname(fileURLToPath(import.meta.url));
 
   const source = path.join(__dirname, "templates", language);
 
   try {
     await copyFiles(source, destination);
+
+    if (packageManager === "yarn") {
+      const yarncleanSrc = path.join(__dirname, "templates", ".yarnclean");
+      const yarncleanDest = path.join(destination, ".yarnclean");
+
+      fs.copyFileSync(yarncleanSrc, yarncleanDest);
+      console.log(".yarnclean file copied successfully!");
+    }
+
     console.log("Project structure copied successfully!");
 
     console.log("Installing dependencies!");
-    await runNpmInstall(destination);
+
+    await runNpmInstall(destination, packageManager);
+
     console.log("Dependencies installed successfully!");
   } catch (error) {
     console.error("Error:", error);
@@ -35,26 +49,46 @@ const copyFiles = (source, destination) => {
   });
 };
 
-function runNpmInstall(directory) {
-  console.log("Installing in directory:", directory);
-
-  return new Promise((resolve, reject) => {
-    const npmInstall = spawn("npm", ["install"], {
-      cwd: directory,
-      stdio: "inherit", // This will show the npm output in the console
-      shell: true, // This option runs the command within a shell
+async function isYarnAvailable() {
+  return new Promise((resolve) => {
+    const checkYarn = spawn("yarn", ["--version"], {
+      stdio: "ignore", // We don't want to display the output
+      shell: true,
     });
 
-    npmInstall.on("close", (code) => {
+    checkYarn.on("close", (code) => {
       if (code !== 0) {
-        reject(new Error(`"npm install" failed with code ${code}`));
+        resolve(false); // Yarn is not available
+      } else {
+        resolve(true); // Yarn is available
+      }
+    });
+  });
+}
+
+function runNpmInstall(directory, packageManager) {
+  console.log(`Installing in directory: ${directory} using ${packageManager}`);
+
+  const cmd = packageManager === "npm" ? "npm" : "yarn";
+  const args = packageManager === "npm" ? ["install"] : [];
+
+  return new Promise((resolve, reject) => {
+    const installProcess = spawn(cmd, args, {
+      cwd: directory,
+      stdio: "inherit",
+      shell: true,
+    });
+
+    installProcess.on("close", (code) => {
+      if (code !== 0) {
+        reject(new Error(`"${cmd} install" failed with code ${code}`));
       } else {
         resolve();
       }
     });
 
-    npmInstall.on("error", (error) => {
-      console.error("Error during npm install:", error);
+    installProcess.on("error", (error) => {
+      console.error(`Error during ${cmd} install:`, error);
     });
   });
 }
@@ -78,9 +112,22 @@ const main = async () => {
       choices: ["Javascript", "Typescript"],
       default: "Javascript",
     },
+    {
+      type: "list",
+      name: "packageManager",
+      message: "Choose a package manager:",
+      choices: ["npm", "yarn"],
+      default: "npm",
+    },
   ]);
+  if (answers.packageManager === "yarn" && !(await isYarnAvailable())) {
+    console.error(
+      "It seems you don't have 'yarn' installed. Please install it globally with 'npm -g i yarn' or choose 'npm'."
+    );
+    return;
+  }
 
-  await copyTemplate(answers.projectName, answers.language);
+  await copyTemplate(answers);
 };
 
 main();
