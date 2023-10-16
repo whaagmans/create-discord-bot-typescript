@@ -1,23 +1,11 @@
 {
-  "name": "discord-bot-typescript-template",
+  "name": "discord-bot-template",
   "version": "1.0.0",
   "description": "A template for creating discord bots with Typescript with an easy to understand architecture",
-  "main": "index.js",
   "scripts": {
     "start": "ts-node src/Bot.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Redeamerz/discord-bot-typescript-template.git"
-  },
-  "keywords": [],
-  "author": "Wesley Haagmans",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Redeamerz/discord-bot-typescript-template/issues"
-  },
-  "homepage": "https://github.com/Redeamerz/discord-bot-typescript-template#readme",
   "dependencies": {
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.3"
