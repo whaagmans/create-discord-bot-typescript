@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whaagmans/create-discord-bot.git"
+    "url": "git+https://github.com/whaagmans/create-discord-bot-typescript.git"
   },
   "type": "module",
   "bin": {
@@ -22,9 +22,9 @@
   "author": "whaagmans",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/whaagmans/create-discord-bot/issues"
+    "url": "https://github.com/whaagmans/create-discord-bot-typescript/issues"
   },
-  "homepage": "https://github.com/whaagmans/create-discord-bot#readme",
+  "homepage": "https://github.com/whaagmans/create-discord-bot-typescript#readme",
   "dependencies": {
     "fs-extra": "^11.1.1",
     "inquirer": "^9.2.11",
