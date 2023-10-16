@@ -1,5 +1,5 @@
 {
-  "name": "create-discord-bot",
+  "name": "create-discord-bot-typescript",
   "version": "1.0.0",
   "description": "npx script to instantly create a good folder structure based on https://github.com/whaagmans/discord-bot-typescript-template to start building your own discord bot",
   "main": "index.js",
