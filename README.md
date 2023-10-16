@@ -18,7 +18,7 @@ Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.co
 To use this CLI tool, you can either:
 
 1. Clone this repository and run the CLI directly.
-   
+
    ```bash
    git clone https://github.com/whaagmans/create-discord-bot.git
    cd create-discord-bot
