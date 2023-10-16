@@ -43,15 +43,22 @@ The CLI will generate the necessary project structure for you!
 
 Depending on your selections, the CLI will generate a structure similar to:
 
-```
-/my-discord-bot
-|-- /src
-|   |-- /commands
-|   |-- /events
-|   |-- index.js (or index.ts for TypeScript)
-|-- package.json
-|-- .yarnclean (only if yarn is selected)
-|-- ... (other configuration and setup files)
+```arduino
+src/
+├── commands/
+|   |── hello.ts
+├── listeners/
+│   ├── ready.ts
+│   └── interactionCreate.ts
+├── model/
+|   |── createModal/
+│   |   └── exampleModal.ts
+|   └── modalResponse/
+|       └── exampleResponse.ts
+├── types/
+|   └── Command.ts
+├── Command.ts
+└── Bot.ts
 ```
 
 ## Contributing
