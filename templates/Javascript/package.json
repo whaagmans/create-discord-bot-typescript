@@ -1,0 +1,21 @@
+{
+  "name": "discord-bot-template",
+  "version": "1.0.0",
+  "description": "A template for creating discord bots with Typescript with an easy to understand architecture",
+  "scripts": {
+    "start": "src/Bot.js",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.js\" --fix"
+  },
+  "keywords": [],
+  "dependencies": {
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.1",
+    "prettier-plugin-organize-imports": "^3.2.2"
+  }
+}
