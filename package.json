@@ -9,7 +9,7 @@
   },
   "type": "module",
   "bin": {
-    "create-discord-bot": "./index.js"
+    "create-discord-bot-typescript": "./index.js"
   },
   "keywords": [
     "discord",
