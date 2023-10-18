@@ -1,25 +1,27 @@
 #!/usr/bin/env node
 
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
-import inquirer from "inquirer";
-import ncp from "ncp";
 import { spawn } from "child_process";
 import fs from "fs";
+import inquirer from "inquirer";
+import ncp from "ncp";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const copyTemplate = async (answers) => {
   const { projectName: destination, language, packageManager } = answers;
+
+  const targetDestination = destination === process.cwd() ? "." : destination;
 
   const __dirname = dirname(fileURLToPath(import.meta.url));
 
   const source = path.join(__dirname, "templates", language);
 
   try {
-    await copyFiles(source, destination);
+    await copyFiles(source, targetDestination);
 
     if (packageManager === "yarn") {
       const yarncleanSrc = path.join(__dirname, "templates", ".yarnclean");
-      const yarncleanDest = path.join(destination, ".yarnclean");
+      const yarncleanDest = path.join(targetDestination, ".yarnclean");
 
       fs.copyFileSync(yarncleanSrc, yarncleanDest);
       console.log(".yarnclean file copied successfully!");
@@ -29,7 +31,7 @@ const copyTemplate = async (answers) => {
 
     console.log("Installing dependencies!");
 
-    await runNpmInstall(destination, packageManager);
+    await runNpmInstall(targetDestination, packageManager);
 
     console.log("Dependencies installed successfully!");
   } catch (error) {
@@ -94,8 +96,6 @@ function runNpmInstall(directory, packageManager) {
 }
 
 const main = async () => {
-  const currentDirName = path.basename(process.cwd());
-
   const answers = await inquirer.prompt([
     {
       type: "input",
@@ -103,7 +103,7 @@ const main = async () => {
       message: "Enter the project name (or . for current directory):",
       default: ".",
       validate: (input) => (input ? true : "Project name cannot be empty"),
-      filter: (input) => (input === "." ? currentDirName : input),
+      filter: (input) => (input === "." ? process.cwd() : input),
     },
     {
       type: "list",
