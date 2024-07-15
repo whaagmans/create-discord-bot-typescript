@@ -2,7 +2,7 @@
 
 import { spawn } from "child_process";
 import fs from "fs";
-import inquirer from "inquirer";
+import { input, select } from "@inquirer/prompts";
 import ncp from "ncp";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
@@ -96,37 +96,34 @@ function runNpmInstall(directory, packageManager) {
 }
 
 const main = async () => {
-  const answers = await inquirer.prompt([
-    {
-      type: "input",
-      name: "projectName",
-      message: "Enter the project name (or . for current directory):",
+  const answers = {
+    projectName: await input({
       default: ".",
+      message: "Enter the project name (or . for current directory):",
       validate: (input) => (input ? true : "Project name cannot be empty"),
       filter: (input) => (input === "." ? process.cwd() : input),
-    },
-    {
-      type: "list",
-      name: "language",
-      message: "Choose a language:",
-      choices: ["Javascript", "Typescript"],
+      required: true,
+    }),
+    language: await select({
       default: "Javascript",
-    },
-    {
-      type: "list",
-      name: "packageManager",
-      message: "Choose a package manager:",
-      choices: ["npm", "yarn"],
+      message: "Choose a language:",
+      choices: [{ value: "Javascript"}, { value: "Typescript"}],
+      required: true,
+    }),
+    packageManager: await select({
       default: "npm",
-    },
-  ]);
+      message: "Choose a package manager:",
+      choices: [{ value: "npm"}, { value: "yarn"}],
+      required: true,
+    }),
+  };
+
   if (answers.packageManager === "yarn" && !(await isYarnAvailable())) {
     console.error(
       "It seems you don't have 'yarn' installed. Please install it globally with 'npm -g i yarn' or choose 'npm'."
     );
     return;
   }
-
   await copyTemplate(answers);
 };
 
