@@ -1,4 +1,4 @@
-import { ActivityType, Client, REST, Routes } from 'discord.js';
+import { ActivityType, REST, Routes } from 'discord.js';
 import { Commands } from 'src/Commands';
 
 const ready = (client) => {
