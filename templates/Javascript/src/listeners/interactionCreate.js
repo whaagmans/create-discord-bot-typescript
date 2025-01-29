@@ -1,9 +1,5 @@
 import {
-	Client,
-	CommandInteraction,
-	Events,
-	Interaction,
-	ModalSubmitInteraction,
+	Events
 } from 'discord.js';
 import { Commands } from 'src/Commands';
 import { Modals } from 'src/Modals';
