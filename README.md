@@ -28,7 +28,7 @@ To use this CLI tool, you can either:
 2. Or you can run it directly via npx without cloning:
 
    ```bash
-   npx create-discord-bot
+   npx create-discord-bot-typescript
    ```
 
 Follow the prompts:
