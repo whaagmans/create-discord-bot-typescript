@@ -17,9 +17,7 @@ const CreateLoginModal = () => {
 		.setStyle(TextInputStyle.Short)
 		.setRequired(true);
 
-	const firstRow = new ActionRowBuilder().addComponents(
-		usernameInput
-	);
+	const firstRow = new ActionRowBuilder().addComponents(usernameInput);
 
 	return modal.addComponents(firstRow);
 };

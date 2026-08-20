@@ -1,12 +1,12 @@
 import {
-	Client,
-	CommandInteraction,
+	type Client,
+	type CommandInteraction,
 	Events,
-	Interaction,
-	ModalSubmitInteraction,
+	type Interaction,
+	type ModalSubmitInteraction,
 } from 'discord.js';
-import { Commands } from 'src/Commands';
-import { Modals } from 'src/Modals';
+import { Commands } from '../Commands';
+import { Modals } from '../Modals';
 
 const interactionCreate = (client: Client): void => {
 	client.on(Events.InteractionCreate, async (interaction: Interaction) => {
@@ -20,10 +20,10 @@ const interactionCreate = (client: Client): void => {
 };
 
 const handleModalSubmit = async (
-	interaction: ModalSubmitInteraction
+	interaction: ModalSubmitInteraction,
 ): Promise<void> => {
 	const modalResponse = Modals.find(
-		(modal) => modal.modalReference === interaction.customId
+		(modal) => modal.modalReference === interaction.customId,
 	);
 	if (!modalResponse) {
 		interaction.reply({ content: 'an error has occured', ephemeral: true });
@@ -34,10 +34,10 @@ const handleModalSubmit = async (
 };
 
 const handleSlashCommand = async (
-	interaction: CommandInteraction
+	interaction: CommandInteraction,
 ): Promise<void> => {
 	const slashCommand = Commands.find(
-		(command) => command.data.name === interaction.commandName
+		(command) => command.data.name === interaction.commandName,
 	);
 	if (!slashCommand) {
 		interaction.reply({ content: 'an error has occurred', ephemeral: true });

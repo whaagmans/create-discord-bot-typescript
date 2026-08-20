@@ -1,5 +1,5 @@
-import { Command } from '@/types/Command';
-import { CommandInteraction, SlashCommandBuilder } from 'discord.js';
+import type { Command } from '../types/Command';
+import { type CommandInteraction, SlashCommandBuilder } from 'discord.js';
 
 const Hello: Command = {
 	data: new SlashCommandBuilder()

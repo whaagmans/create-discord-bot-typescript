@@ -1,5 +1,5 @@
-import { Modal } from '@/types/Modal';
-import { ModalSubmitInteraction } from 'discord.js';
+import type { Modal } from '../../types/Modal';
+import type { ModalSubmitInteraction } from 'discord.js';
 
 const exampleResponse: Modal = {
 	// Name should be the same as the customID in the modal's set at the modals creation

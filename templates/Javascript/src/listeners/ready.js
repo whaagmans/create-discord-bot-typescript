@@ -1,5 +1,5 @@
 import { ActivityType, REST, Routes } from 'discord.js';
-import { Commands } from 'src/Commands';
+import { Commands } from '../Commands.js';
 
 const ready = (client) => {
 	client.on('ready', async () => {
@@ -23,7 +23,7 @@ const ready = (client) => {
 		(async () => {
 			try {
 				console.log(
-					`Started refreshing ${Commands.length} application (/) commands.`
+					`Started refreshing ${Commands.length} application (/) commands.`,
 				);
 
 				const botId = process.env.DISCORD_BOT_ID;
@@ -36,8 +36,8 @@ const ready = (client) => {
 					})
 					.then((data) =>
 						console.log(
-							`Successfully reloaded ${data.length} application (/) commands.`
-						)
+							`Successfully reloaded ${data.length} application (/) commands.`,
+						),
 					);
 			} catch (error) {
 				// And of course, make sure you catch and log any errors!

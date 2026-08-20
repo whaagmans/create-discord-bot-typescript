@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-import { spawn } from "child_process";
-import fs from "fs";
+import { spawn } from "node:child_process";
+import { copyFile, cp } from "node:fs/promises";
 import { input, select } from "@inquirer/prompts";
-import ncp from "ncp";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const copyTemplate = async (answers) => {
   const { projectName: destination, language, packageManager } = answers;
@@ -23,7 +22,7 @@ const copyTemplate = async (answers) => {
       const yarncleanSrc = path.join(__dirname, "templates", ".yarnclean");
       const yarncleanDest = path.join(targetDestination, ".yarnclean");
 
-      fs.copyFileSync(yarncleanSrc, yarncleanDest);
+      await copyFile(yarncleanSrc, yarncleanDest);
       console.log(".yarnclean file copied successfully!");
     }
 
@@ -40,22 +39,14 @@ const copyTemplate = async (answers) => {
 };
 
 const copyFiles = (source, destination) => {
-  return new Promise((resolve, reject) => {
-    ncp(source, destination, (err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
-    });
-  });
+  return cp(source, destination, { recursive: true });
 };
 
 async function isYarnAvailable() {
   return new Promise((resolve) => {
     const checkYarn = spawn("yarn", ["--version"], {
       stdio: "ignore", // We don't want to display the output
-      shell: true,
+      shell: false,
     });
 
     checkYarn.on("close", (code) => {
@@ -78,7 +69,7 @@ function runNpmInstall(directory, packageManager) {
     const installProcess = spawn(cmd, args, {
       cwd: directory,
       stdio: "inherit",
-      shell: true,
+      shell: false,
     });
 
     installProcess.on("close", (code) => {
@@ -107,20 +98,20 @@ const main = async () => {
     language: await select({
       default: "Javascript",
       message: "Choose a language:",
-      choices: [{ value: "Javascript"}, { value: "Typescript"}],
+      choices: [{ value: "Javascript" }, { value: "Typescript" }],
       required: true,
     }),
     packageManager: await select({
       default: "npm",
       message: "Choose a package manager:",
-      choices: [{ value: "npm"}, { value: "yarn"}],
+      choices: [{ value: "npm" }, { value: "yarn" }],
       required: true,
     }),
   };
 
   if (answers.packageManager === "yarn" && !(await isYarnAvailable())) {
     console.error(
-      "It seems you don't have 'yarn' installed. Please install it globally with 'npm -g i yarn' or choose 'npm'."
+      "It seems you don't have 'yarn' installed. Please install it globally with 'npm -g i yarn' or choose 'npm'.",
     );
     return;
   }
