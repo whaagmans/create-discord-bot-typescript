@@ -1,0 +1,21 @@
+# Dependencies are installed inside the image by "npm ci"
+node_modules
+npm-debug.log*
+yarn-error.log*
+yarn.lock
+
+# Secrets must be passed at runtime, never baked into the image
+.env
+.env.*
+
+# Not needed at runtime
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+.prettierrc
+.prettierignore
+eslint.config.js
+coverage
+*.tgz

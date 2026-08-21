@@ -1,0 +1,25 @@
+# Dependencies are installed inside the image by "npm ci"
+node_modules
+npm-debug.log*
+yarn-error.log*
+yarn.lock
+
+# Build output is produced inside the image by "npm run build"
+dist
+*.tsbuildinfo
+
+# Secrets must be passed at runtime, never baked into the image
+.env
+.env.*
+
+# Not needed at runtime
+.git
+.gitignore
+.dockerignore
+Dockerfile
+README.md
+.prettierrc
+.prettierignore
+eslint.config.mjs
+coverage
+*.tgz
