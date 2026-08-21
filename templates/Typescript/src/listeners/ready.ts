@@ -17,7 +17,8 @@ const ready = (client: Client): void => {
 
 		// Construct and prepare an instance of the REST module
 		const botToken = process.env.DISCORD_BOT_TOKEN;
-		if (!botToken) throw new Error();
+		if (!botToken)
+			throw new Error('DISCORD_BOT_TOKEN is not set in the environment.');
 		const rest = new REST({ version: '10' }).setToken(botToken);
 
 		const commandsBody = [];
@@ -33,7 +34,8 @@ const ready = (client: Client): void => {
 				);
 
 				const botId = process.env.DISCORD_BOT_ID;
-				if (!botId) throw new Error();
+				if (!botId)
+					throw new Error('DISCORD_BOT_ID is not set in the environment.');
 
 				// The put method is used to fully refresh all commands in the guild with the current set
 				const data = (await rest.put(Routes.applicationCommands(botId), {

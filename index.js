@@ -224,14 +224,15 @@ const isEntrypoint =
 		resolveRealPath(fileURLToPath(import.meta.url));
 
 if (isEntrypoint) {
-	main().catch((error) => {
-		if (error?.name === "ExitPromptError") {
-			return; // The user cancelled the prompt (Ctrl+C)
+	try {
+		await main();
+	} catch (error) {
+		// An "ExitPromptError" means the user cancelled the prompt (Ctrl+C).
+		if (error?.name !== "ExitPromptError") {
+			console.error("Error:", error);
+			process.exitCode = 1;
 		}
-
-		console.error("Error:", error);
-		process.exitCode = 1;
-	});
+	}
 }
 
 export { assertPathWithin, resolveProjectDestination };
