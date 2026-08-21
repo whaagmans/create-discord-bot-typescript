@@ -1,50 +1,19 @@
 ###################
-# BUILD FOR LOCAL DEVELOPMENT
+# APPLICATION
 ###################
 
-FROM node:19-alpine AS development
+FROM node:24-alpine
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node package*.json ./
+COPY --chown=node:node package.json package-lock.json ./
 
-RUN yarn
-
-COPY --chown=node:node . .
-
-USER node
-
-###################
-# BUILD FOR PRODUCTION
-###################
-
-FROM node:19-alpine AS build
-
-WORKDIR /usr/src/app
-
-COPY --chown=node:node package*.json ./
-
-COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modules
+RUN npm ci --ignore-scripts --omit=dev
 
 COPY --chown=node:node . .
 
-RUN yarn build
-
-ENV NODE_ENV production
-
-RUN yarn --frozen-lockfile --prod
+ENV NODE_ENV=production
 
 USER node
 
-###################
-# PRODUCTION
-###################
-
-FROM node:19-alpine AS production
-
-RUN apk add --no-cache ffmpeg
-
-COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-
-CMD [ "node", "dist/Bot.js" ]
+CMD [ "node", "src/Bot.js" ]

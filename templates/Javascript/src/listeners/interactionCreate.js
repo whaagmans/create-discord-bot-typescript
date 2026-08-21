@@ -1,8 +1,6 @@
-import {
-	Events
-} from 'discord.js';
-import { Commands } from 'src/Commands';
-import { Modals } from 'src/Modals';
+import { Events } from 'discord.js';
+import { Commands } from '../Commands.js';
+import { Modals } from '../Modals.js';
 
 const interactionCreate = (client) => {
 	client.on(Events.InteractionCreate, async (interaction) => {
@@ -15,11 +13,9 @@ const interactionCreate = (client) => {
 	});
 };
 
-const handleModalSubmit = async (
-	interaction
-) => {
+const handleModalSubmit = async (interaction) => {
 	const modalResponse = Modals.find(
-		(modal) => modal.modalReference === interaction.customId
+		(modal) => modal.modalReference === interaction.customId,
 	);
 	if (!modalResponse) {
 		interaction.reply({ content: 'an error has occured', ephemeral: true });
@@ -29,11 +25,9 @@ const handleModalSubmit = async (
 	modalResponse.run(interaction);
 };
 
-const handleSlashCommand = async (
-	interaction
-) => {
+const handleSlashCommand = async (interaction) => {
 	const slashCommand = Commands.find(
-		(command) => command.data.name === interaction.commandName
+		(command) => command.data.name === interaction.commandName,
 	);
 	if (!slashCommand) {
 		interaction.reply({ content: 'an error has occurred', ephemeral: true });

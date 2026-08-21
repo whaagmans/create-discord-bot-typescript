@@ -1,4 +1,4 @@
-import exampleResponse from './modal/exampleModal/exampleResponse';
+import exampleResponse from './modal/exampleModal/exampleResponse.js';
 
 const Modals = [exampleResponse];
 

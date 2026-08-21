@@ -1,4 +1,4 @@
-import Hello from './commands/hello';
+import Hello from './commands/hello.js';
 
 const Commands = [Hello];
 

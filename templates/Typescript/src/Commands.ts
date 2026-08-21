@@ -1,5 +1,5 @@
-import Hello from '@/commands/hello';
-import { Command } from '@/types/Command';
+import Hello from './commands/hello';
+import type { Command } from './types/Command';
 
 const Commands: Command[] = [Hello];
 

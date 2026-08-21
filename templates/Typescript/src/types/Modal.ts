@@ -1,4 +1,4 @@
-import { ModalSubmitInteraction } from 'discord.js';
+import type { ModalSubmitInteraction } from 'discord.js';
 
 export interface Modal {
 	modalReference: string;
